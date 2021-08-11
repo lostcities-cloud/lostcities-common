@@ -1,7 +1,8 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.5.10'
-    id 'java'
 }
+
+apply plugin: 'maven-publish'
 
 group 'io.dereknelson.lostcities'
 version '1.0-SNAPSHOT'
@@ -19,4 +20,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
+    }
 }
