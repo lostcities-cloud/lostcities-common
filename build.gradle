@@ -29,7 +29,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = rootProject.group
                 artifactId = rootProject.name
-                version = gitVersion()
+                //version = gitVersion()
             }
         }
     }
