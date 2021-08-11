@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+    id 'com.palantir.git-version' version '0.12.3'
 }
 
 apply plugin: 'maven-publish'
@@ -22,11 +23,13 @@ test {
     useJUnitPlatform()
 }
 
-project.afterEvaluate {
+afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                groupId = rootProject.group
+                artifactId = rootProject.name
+                version = gitVersion()
             }
         }
     }
