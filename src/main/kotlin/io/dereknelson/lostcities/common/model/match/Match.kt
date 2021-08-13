@@ -13,7 +13,7 @@ data class Match (
     val isStarted: Boolean = false,
     val isCompleted: Boolean = false,
 
-    val concededBy: User?,
+    val concededBy: Long?,
 
     val createdDate: LocalDateTime,
     val lastModifiedDate: LocalDateTime,
