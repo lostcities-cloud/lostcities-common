@@ -1,14 +1,13 @@
 package io.dereknelson.lostcities.common.model.match
 
-import io.dereknelson.lostcities.common.model.User
 import java.util.*
 
 data class UserPair (
     var user1: Long?=null,
     var user2: Long?=null,
 
-    var score1: Int?=null,
-    var score2: Int?=null
+    var score1: Int=0,
+    var score2: Int=0
 ) {
     val isPopulated: Boolean
         get() = user1 != null && user2 != null
