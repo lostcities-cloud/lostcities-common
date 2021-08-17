@@ -1,6 +1,7 @@
-package io.dereknelson.lostcities.common.auth
+package io.dereknelson.lostcities.common.library
 
 
+import io.dereknelson.lostcities.common.auth.LostCitiesAuthenticationToken
 import io.dereknelson.lostcities.common.auth.entity.UserRef
 import io.jsonwebtoken.*
 import org.slf4j.LoggerFactory

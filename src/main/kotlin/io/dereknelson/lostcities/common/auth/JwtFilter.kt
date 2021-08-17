@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.common.auth
 
+import io.dereknelson.lostcities.common.library.TokenProvider
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils

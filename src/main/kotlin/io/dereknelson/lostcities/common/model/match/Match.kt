@@ -1,6 +1,5 @@
 package io.dereknelson.lostcities.common.model.match
 
-import io.dereknelson.lostcities.common.model.User
 import java.time.LocalDateTime
 import java.util.*
 
