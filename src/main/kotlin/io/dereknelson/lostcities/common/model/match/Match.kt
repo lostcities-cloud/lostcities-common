@@ -12,7 +12,7 @@ open class Match (
     val isStarted: Boolean = false,
     val isCompleted: Boolean = false,
 
-    val concededBy: Long? = null,
+    val concededBy: String? = null,
 
     val createdDate: LocalDateTime? = null,
     val lastModifiedDate: LocalDateTime? = null,
@@ -20,7 +20,7 @@ open class Match (
     var lastModifiedBy: String? = null
 ) {
     companion object {
-        fun buildMatch(player: Long, random: Random): Match{
+        fun buildMatch(player: String, random: Random): Match{
             return Match(players= UserPair(user1=player), seed=random.nextLong())
         }
     }

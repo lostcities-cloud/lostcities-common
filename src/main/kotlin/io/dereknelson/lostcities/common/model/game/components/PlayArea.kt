@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.common.model.game.components
 
 class PlayArea {
-    val board: Map<Color, MutableList<Card>> = Color.values()
-        .associate { it to mutableListOf() }
+    private val board: Map<Color, MutableList<Card>> = Color.values()
+        .associateWith { mutableListOf() }
 
     fun get(color: Color) : MutableList<Card> {
         return board[color]!!

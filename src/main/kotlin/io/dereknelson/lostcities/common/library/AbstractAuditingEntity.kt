@@ -37,7 +37,7 @@ abstract class AbstractAuditingEntity : Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     @JsonIgnore
-    open var lastModifiedDate: Instant = Instant.now()
+    open var lastModifiedDate: Instant? = Instant.now()
 
     companion object {
         private const val serialVersionUID = 1L

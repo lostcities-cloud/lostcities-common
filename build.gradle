@@ -19,6 +19,8 @@ dependencies {
 
     implementation 'org.springframework.data:spring-data-jpa:2.5.4'
 
+    implementation 'org.springframework.data:spring-data-commons:2.5.4'
+
     implementation 'org.springframework.security:spring-security-config:5.5.1'
     implementation 'org.springframework.security:spring-security-web:5.5.1'
 

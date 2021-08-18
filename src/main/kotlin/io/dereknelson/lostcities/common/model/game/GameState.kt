@@ -14,17 +14,17 @@ class GameState(
     private val deck : LinkedHashSet<Card>
 ) {
     var phase = Phase.PLAY_OR_DISCARD
-    var currentPlayer : Long = players.user1!!
+    var currentPlayer = players.user1
 
     private val discard = PlayArea()
 
-    private val playerAreas: Map<Long, PlayArea> = mapOf(
-        players.user1!! to PlayArea(),
+    private val playerAreas: Map<String, PlayArea> = mapOf(
+        players.user1 to PlayArea(),
         players.user2!! to PlayArea()
     )
 
-    private val playerHands: Map<Long, MutableList<Card>> = mapOf(
-        players.user1!! to mutableListOf(),
+    private val playerHands: Map<String, MutableList<Card>> = mapOf(
+        players.user1 to mutableListOf(),
         players.user2!! to mutableListOf()
     )
 
@@ -36,7 +36,7 @@ class GameState(
         }
     }
 
-    fun drawCard(player: Long) {
+    fun drawCard(player: String) {
         if(deck.isNotEmpty()) {
             val drawn = deck.first()
             deck.remove(drawn)
@@ -44,7 +44,7 @@ class GameState(
         }
     }
 
-    fun drawFromDiscard(player : Long, color: Color) {
+    fun drawFromDiscard(player : String, color: Color) {
         if(canDrawFromDiscard(color)) {
             val cards = discard.get(color)
             val drawn = cards.first()
@@ -53,13 +53,13 @@ class GameState(
         }
     }
 
-    fun playCard(player : Long, card : Card) {
+    fun playCard(player : String, card : Card) {
         if(isCardInHand(player, card)) {
             getPlayerArea(player).get(card.color).add(card)
         }
     }
 
-    fun discard(player : Long, card : Card) {
+    fun discard(player : String, card : Card) {
         if(isCardInHand(player, card)) {
             discard.get(card.color).add(card)
         }
@@ -69,15 +69,15 @@ class GameState(
         return !discard.isEmpty(color)
     }
 
-    private fun isCardInHand(player : Long, card : Card) : Boolean {
+    private fun isCardInHand(player : String, card : Card) : Boolean {
         return getHand(player).contains(card)
     }
 
-    private fun getHand(player : Long) : MutableList<Card> {
+    private fun getHand(player : String) : MutableList<Card> {
         return playerHands[player]!!
     }
 
-    private fun getPlayerArea(player : Long) : PlayArea {
+    private fun getPlayerArea(player : String) : PlayArea {
         return playerAreas[player]!!
     }
 
