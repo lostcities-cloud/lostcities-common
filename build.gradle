@@ -1,6 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm'
-
+    id 'org.jetbrains.kotlin.jvm' version "1.5.20"
 }
 
 apply plugin: 'maven-publish'
@@ -9,6 +8,7 @@ group 'com.github.lostcities-cloud'
 version '1.0-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -42,4 +42,30 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            // Include any other artifacts here, like javadocs
+        }
+    }
+
+    repositories {
+        publications {
+            gpr(MavenPublication) {
+                from(components.java)
+            }
+        }
+
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
