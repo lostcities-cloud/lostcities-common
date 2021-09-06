@@ -8,7 +8,6 @@ group 'com.github.lostcities-cloud'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -16,7 +15,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.30-RC"
 
     compileOnly "org.springframework:spring-web:5.3.+"
-
 
     implementation 'org.springframework.data:spring-data-jpa:2.5.4'
 
