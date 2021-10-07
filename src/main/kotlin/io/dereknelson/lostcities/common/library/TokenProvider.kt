@@ -25,9 +25,9 @@ class TokenProvider(
 
     private var secret: String = "ZmNhZmUyNzNkNTE1ZTdiZDA2MmJjNWY4MWE2NzFlMTRkMmViNGE3M2E0YTRiYjg1ZGMxMDY1NGZkNjhhMTdmMjI4OTA5NTUzMzkyZjI1NDUyNjFlY2M3MjBkY2Y2OTAwMGU3NDQwYWMxNmZiNTJjZmZjMzkxMmU1OGZmYzQxOGU="
     //@Value("application.authentication.jwt.token-validity-in-seconds")
-    private var tokenValidityInSeconds: String = "0"
+    private var tokenValidityInSeconds: String = (60).toString()
     //@Value("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me")
-    private var tokenValidityInSecondsForRememberMe: String = "0"
+    private var tokenValidityInSecondsForRememberMe: String = (60 * 60).toString()
 
     @PostConstruct
     fun init() {
