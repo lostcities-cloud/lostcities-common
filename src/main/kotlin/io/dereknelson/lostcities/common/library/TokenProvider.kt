@@ -2,6 +2,7 @@ package io.dereknelson.lostcities.common.library
 
 
 import io.dereknelson.lostcities.common.auth.LostCitiesAuthenticationToken
+import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.auth.entity.UserRef
 import io.jsonwebtoken.*
 import org.slf4j.LoggerFactory
@@ -19,8 +20,8 @@ class TokenProvider(
 ) {
     private val log = LoggerFactory.getLogger(TokenProvider::class.java)
     private var secretKey: String? = null
-    private var tokenValidityInMilliseconds: Long = 0
-    private var tokenValidityInMillisecondsForRememberMe: Long = 0
+    private var tokenValidityInMilliseconds: Long = 60
+    private var tokenValidityInMillisecondsForRememberMe: Long = 60 * 60
 
     private var secret: String = "ZmNhZmUyNzNkNTE1ZTdiZDA2MmJjNWY4MWE2NzFlMTRkMmViNGE3M2E0YTRiYjg1ZGMxMDY1NGZkNjhhMTdmMjI4OTA5NTUzMzkyZjI1NDUyNjFlY2M3MjBkY2Y2OTAwMGU3NDQwYWMxNmZiNTJjZmZjMzkxMmU1OGZmYzQxOGU="
     //@Value("application.authentication.jwt.token-validity-in-seconds")
@@ -59,6 +60,20 @@ class TokenProvider(
     }
 
     fun getAuthentication(token: String?): Authentication {
+        val claims = Jwts.parser()
+            .setSigningKey(secretKey)
+            .parseClaimsJws(token)
+            .body
+        val authorities: MutableCollection<GrantedAuthority> = Arrays.stream(
+            claims[AUTHORITIES_KEY].toString().split(",".toRegex()).toTypedArray()
+        )
+            .map { role: String? -> SimpleGrantedAuthority(role) }
+            .collect(Collectors.toList())
+        val principal = UserRef(claims[USER_ID_KEY].toString().toLong(), claims[LOGIN_KEY].toString(), claims[EMAIL_KEY].toString())
+        return LostCitiesAuthenticationToken(principal, token, authorities)
+    }
+
+    fun getUserDetails(token: String?): LostCitiesAuthenticationToken {
         val claims = Jwts.parser()
             .setSigningKey(secretKey)
             .parseClaimsJws(token)
