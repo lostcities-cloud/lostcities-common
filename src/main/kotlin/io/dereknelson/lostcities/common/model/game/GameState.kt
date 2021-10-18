@@ -11,19 +11,19 @@ import kotlin.collections.LinkedHashSet
 class GameState(
     val id : Long,
     players : UserPair,
-    private val deck : LinkedHashSet<Card>
+    val deck : LinkedHashSet<Card>
 ) {
     var phase = Phase.PLAY_OR_DISCARD
     var currentPlayer = players.user1
 
     private val discard = PlayArea()
 
-    private val playerAreas: Map<String, PlayArea> = mapOf(
+    val playerAreas: Map<String, PlayArea> = mapOf(
         players.user1 to PlayArea(),
         players.user2!! to PlayArea()
     )
 
-    private val playerHands: Map<String, MutableList<Card>> = mapOf(
+    val playerHands: Map<String, MutableList<Card>> = mapOf(
         players.user1 to mutableListOf(),
         players.user2!! to mutableListOf()
     )
