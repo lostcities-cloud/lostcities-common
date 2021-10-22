@@ -20,7 +20,7 @@ open class Match (
     var lastModifiedBy: String? = null
 ) {
     companion object {
-        fun buildMatch(player: String, random: Random): Match{
+        fun buildMatch(player: String, random: Random): Match {
             return Match(players= UserPair(user1=player), seed=random.nextLong())
         }
     }
