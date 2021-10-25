@@ -5,7 +5,6 @@ import io.dereknelson.lostcities.common.model.game.components.Color
 import io.dereknelson.lostcities.common.model.game.components.Phase
 import io.dereknelson.lostcities.common.model.game.components.PlayArea
 import io.dereknelson.lostcities.common.model.match.UserPair
-import io.dereknelson.lostcities.common.model.User
 import kotlin.collections.LinkedHashSet
 
 class GameState(
@@ -15,8 +14,7 @@ class GameState(
 ) {
     var phase = Phase.PLAY_OR_DISCARD
     var currentPlayer = players.user1
-
-    private val discard = PlayArea()
+    val discard = PlayArea()
 
     val playerAreas: Map<String, PlayArea> = mapOf(
         players.user1 to PlayArea(),

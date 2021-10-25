@@ -71,6 +71,8 @@ class TokenProvider(
 
         val details = principal.asUserDetails(token!!, authorities)
 
+        details.isAuthenticated = true
+
         return LostCitiesAuthenticationToken(principal, details, token, authorities)
     }
 

@@ -14,6 +14,10 @@ class LostCitiesAuthenticationToken(
 ) : AbstractAuthenticationToken(authorities) {
     private val serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID
 
+    init{
+        super.setAuthenticated(userDetails.isAuthenticated)
+    }
+
     override fun getPrincipal(): Any {
         return userDetails
     }
@@ -22,7 +26,8 @@ class LostCitiesAuthenticationToken(
         return credentials!!
     }
 
-    override fun isAuthenticated(): Boolean {
-        return true;
+    override fun setAuthenticated(authenticated: Boolean) {
+        userDetails.isAuthenticated = authenticated
+        super.setAuthenticated(authenticated)
     }
 }
