@@ -1,10 +1,18 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
+    id 'java-library'
     id 'org.jetbrains.kotlin.jvm' version "1.5.20"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
 
 apply plugin: 'maven-publish'
 
-group 'com.github.lostcities-cloud'
+group 'io.dereknelson.lostcities-cloud'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -66,6 +74,10 @@ publishing {
             }
         }
     }
+}
+
+tasks.withType(KotlinCompile) {
+    kotlinOptions.jvmTarget = "16"
 }
 
 java {
