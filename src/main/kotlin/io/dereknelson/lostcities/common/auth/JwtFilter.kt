@@ -1,15 +1,13 @@
 package io.dereknelson.lostcities.common.auth
 
-import io.dereknelson.lostcities.common.auth.entity.UserRef
 import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.Order
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 
 
 /**
@@ -38,7 +36,6 @@ class JwtFilter(
         }
         filterChain.doFilter(request, response)
     }
-
     private fun resolveToken(request: HttpServletRequest): String? {
         val bearerToken = request.getHeader(AUTHORIZATION_HEADER)
         return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
