@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
 import java.util.*
 import java.util.stream.Collectors
-import javax.annotation.PostConstruct
 
 @Component
 class TokenProvider(
@@ -27,8 +26,7 @@ class TokenProvider(
     //@Value("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me")
     private var tokenValidityInSecondsForRememberMe: String = (60 * 60 * 24 * 7).toString()
 
-    @PostConstruct
-    fun init() {
+    init {
         secretKey = secret
         tokenValidityInMilliseconds = 1000 * tokenValidityInSeconds.toLong()
         tokenValidityInMillisecondsForRememberMe =

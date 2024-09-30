@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.common.auth.entity
 
-import javax.persistence.*
+import jakarta.persistence.Embeddable
 
 @Embeddable
 open class UserRef(
