@@ -31,7 +31,7 @@ dependencies {
     implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
 
     compileOnly("org.springframework:spring-web:5.3.+")
-    compileOnly("jakarta.servlet:servlet-api:6.1.+")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
     compileOnly("org.slf4j:slf4j-api:1.7.+")
     compileOnly("jakarta.annotation:jakarta.annotation-api:3.0.0")
 
