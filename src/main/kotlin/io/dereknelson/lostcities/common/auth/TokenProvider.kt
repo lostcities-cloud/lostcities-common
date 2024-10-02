@@ -33,6 +33,7 @@ class TokenProvider(
             1000 * tokenValidityInSecondsForRememberMe.toLong()
     }
 
+    @Suppress("DEPRECATION")
     fun createToken(authentication: Authentication, userRef: UserRef, rememberMe: Boolean): String {
         val authorities = authentication.authorities.stream()
             .map { obj: GrantedAuthority -> obj.authority }
@@ -55,6 +56,7 @@ class TokenProvider(
             .compact()
     }
 
+    @Suppress("DEPRECATION")
     fun getAuthentication(token: String?): LostCitiesAuthenticationToken {
         val claims = Jwts.parser()
             .setSigningKey(secretKey)
@@ -74,6 +76,7 @@ class TokenProvider(
         return LostCitiesAuthenticationToken(principal, details, token, authorities)
     }
 
+    @Suppress("DEPRECATION")
     fun validateToken(authToken: String?): Boolean {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken)
