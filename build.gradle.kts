@@ -19,21 +19,21 @@ repositories {
 val ktlint by configurations.creating
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30-RC")
-    implementation("org.springframework.data:spring-data-jpa:2.5.4")
-    implementation("org.springframework.data:spring-data-commons:2.5.4")
-    implementation("org.springframework.security:spring-security-config:5.5.1")
-    implementation("org.springframework.security:spring-security-web:5.5.1")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.+")
+    implementation("org.springframework.data:spring-data-jpa:6.1.+")
+    implementation("org.springframework.data:spring-data-commons:3.1.+")
+    implementation("org.springframework.security:spring-security-config:6.1.+")
+    implementation("org.springframework.security:spring-security-web:6.1.+")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
-    implementation("org.springframework.security:spring-security-core:5.5.1")
-    implementation("javax.persistence:javax.persistence-api:2.2")
+    implementation("org.springframework.security:spring-security-core:6.1.+")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
 
     compileOnly("org.springframework:spring-web:5.3.+")
-    compileOnly("javax.servlet:servlet-api:3.0-alpha-1")
+    compileOnly("jakarta.servlet:servlet-api:6.1.+")
     compileOnly("org.slf4j:slf4j-api:1.7.+")
-    compileOnly("javax.annotation:javax.annotation-api:1.3.2")
+    compileOnly("jakarta.annotation:jakarta.annotation-api:3.0.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
