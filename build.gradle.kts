@@ -20,13 +20,15 @@ val ktlint by configurations.creating
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.+")
-    implementation("org.springframework.data:spring-data-jpa:3.3.4")
+    implementation("org.springframework.data:spring-data-jpa:3.2.+")
     implementation("org.springframework.data:spring-data-commons:3.1.+")
     implementation("org.springframework.security:spring-security-config:6.1.5")
     implementation("org.springframework.security:spring-security-web:6.1.+")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
     implementation("org.springframework.security:spring-security-core:6.1.+")
     implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
 
