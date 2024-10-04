@@ -20,6 +20,7 @@ val ktlint by configurations.creating
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.+")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.1.+")
     implementation("org.springframework.data:spring-data-jpa:3.2.+")
     implementation("org.springframework.data:spring-data-commons:3.1.+")
     implementation("org.springframework.security:spring-security-config:6.1.5")
