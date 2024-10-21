@@ -1,12 +1,17 @@
 package io.dereknelson.lostcities.common.auth
 
 import io.dereknelson.lostcities.common.auth.entity.UserRef
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.UnsupportedJwtException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
+import java.security.SignatureException
 import java.util.*
 import java.util.stream.Collectors
 
