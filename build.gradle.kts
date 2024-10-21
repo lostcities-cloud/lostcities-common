@@ -4,13 +4,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     `maven-publish`
+    id("com.github.rising3.semver") version "0.8.2"
     kotlin("jvm") version "2.0.+"
 }
 
 
 group = "io.dereknelson.lostcities-cloud"
-version = "1.0-SNAPSHOT"
-
+version = project.property("version")!!
 
 repositories {
     mavenCentral()
