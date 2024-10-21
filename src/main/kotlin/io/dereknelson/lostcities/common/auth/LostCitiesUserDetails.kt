@@ -1,12 +1,10 @@
-package io.dereknelson.lostcities.common.auth;
+package io.dereknelson.lostcities.common.auth
 
 import io.dereknelson.lostcities.common.auth.entity.UserRef
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User
-import io.dereknelson.lostcities.common.model.User as CommonUser
+import org.springframework.security.core.GrantedAuthority
 
-class LostCitiesUserDetails (
+class LostCitiesUserDetails(
     val id: Long,
     val login: String,
     val email: String,
@@ -17,10 +15,10 @@ class LostCitiesUserDetails (
     val accountNonExpired: Boolean,
     val accountNonLocked: Boolean,
     val credentialsNonExpired: Boolean,
-    val enabled: Boolean
+    val enabled: Boolean,
 ) : Authentication {
 
-    private var authenticated: Boolean = false;
+    private var authenticated: Boolean = false
 
     override fun getName() = login
 

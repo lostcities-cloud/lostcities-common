@@ -57,11 +57,11 @@ object SecurityUtils {
         get() {
             val authentication = SecurityContextHolder.getContext().authentication
             return authentication != null &&
-                    getAuthorities(authentication).noneMatch { anObject: String? ->
-                        AuthoritiesConstants.ANONYMOUS.equals(
-                            anObject
-                        )
-                    }
+                getAuthorities(authentication).noneMatch { anObject: String? ->
+                    AuthoritiesConstants.ANONYMOUS.equals(
+                        anObject,
+                    )
+                }
         }
 
     /**
@@ -76,7 +76,7 @@ object SecurityUtils {
     fun isCurrentUserInRole(authority: String): Boolean {
         val authentication = SecurityContextHolder.getContext().authentication
         return authentication != null &&
-                getAuthorities(authentication).anyMatch { anObject: String? -> authority.equals(anObject) }
+            getAuthorities(authentication).anyMatch { anObject: String? -> authority.equals(anObject) }
     }
 
     private fun getAuthorities(authentication: Authentication): Stream<String> {

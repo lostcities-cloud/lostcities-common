@@ -10,5 +10,5 @@ open class UserRef(
     var login: String? = null,
 
     @Transient
-    var email: String? = null
+    var email: String? = null,
 )

@@ -1,14 +1,13 @@
 package io.dereknelson.lostcities.common.auth
 
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.Order
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
-import jakarta.servlet.FilterChain
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
-
 
 /**
  * Filters incoming requests and installs a Spring Security principal if a header corresponding to a valid user is
@@ -16,13 +15,13 @@ import jakarta.servlet.http.HttpServletResponse
  */
 @Order(-100)
 class JwtFilter(
-    private val tokenProvider: TokenProvider
+    private val tokenProvider: TokenProvider,
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         val jwt = resolveToken(request)
         val requestURI = request.requestURI
@@ -30,7 +29,11 @@ class JwtFilter(
             val authentication = tokenProvider.getAuthentication(jwt)
             SecurityContextHolder.clearContext()
             SecurityContextHolder.getContext().setAuthentication(authentication)
-            LOG.debug("set Authentication to security context for '{}', uri: {}", authentication.name, requestURI)
+            LOG.debug(
+                "set Authentication to security context for '{}', uri: {}",
+                authentication.name,
+                requestURI,
+            )
         } else {
             LOG.debug("no valid JWT token found, uri: {}", requestURI)
         }
@@ -40,7 +43,9 @@ class JwtFilter(
         val bearerToken = request.getHeader(AUTHORIZATION_HEADER)
         return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             bearerToken.substring(7)
-        } else null
+        } else {
+            null
+        }
     }
 
     companion object {

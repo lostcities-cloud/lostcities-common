@@ -1,8 +1,7 @@
 package io.dereknelson.lostcities.common.auth
 
-
 import io.dereknelson.lostcities.common.auth.entity.UserRef
-import io.jsonwebtoken.*
+import io.jsonwebtoken.SignatureAlgorithm
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -12,18 +11,18 @@ import java.util.*
 import java.util.stream.Collectors
 
 @Component
-class TokenProvider(
-
-) {
+class TokenProvider() {
     private val log = LoggerFactory.getLogger(TokenProvider::class.java)
     private var secretKey: String? = null
     private var tokenValidityInMilliseconds: Long = 60
     private var tokenValidityInMillisecondsForRememberMe: Long = 60 * 60
 
     private var secret: String = "ZmNhZmUyNzNkNTE1ZTdiZDA2MmJjNWY4MWE2NzFlMTRkMmViNGE3M2E0YTRiYjg1ZGMxMDY1NGZkNjhhMTdmMjI4OTA5NTUzMzkyZjI1NDUyNjFlY2M3MjBkY2Y2OTAwMGU3NDQwYWMxNmZiNTJjZmZjMzkxMmU1OGZmYzQxOGU="
-    //@Value("application.authentication.jwt.token-validity-in-seconds")
+
+    // @Value("application.authentication.jwt.token-validity-in-seconds")
     private var tokenValidityInSeconds: String = (60 * 60 * 24).toString()
-    //@Value("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me")
+
+    // @Value("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me")
     private var tokenValidityInSecondsForRememberMe: String = (60 * 60 * 24 * 7).toString()
 
     init {
@@ -63,7 +62,7 @@ class TokenProvider(
             .parseClaimsJws(token)
             .body
         val authorities: MutableCollection<GrantedAuthority> = Arrays.stream(
-            claims[AUTHORITIES_KEY].toString().split(",".toRegex()).toTypedArray()
+            claims[AUTHORITIES_KEY].toString().split(",".toRegex()).toTypedArray(),
         )
             .map { role: String? -> SimpleGrantedAuthority(role) }
             .collect(Collectors.toList())
@@ -100,21 +99,19 @@ class TokenProvider(
         return false
     }
 
-    fun UserRef.asUserDetails(token: String, authorities: Collection<GrantedAuthority>)
-            : LostCitiesUserDetails {
-
+    fun UserRef.asUserDetails(token: String, authorities: Collection<GrantedAuthority>): LostCitiesUserDetails {
         return LostCitiesUserDetails(
             id!!,
             login!!,
             email!!,
-            password="",
-            userRef=this,
-            token=token,
-            authority=authorities.toSet(),
-            accountNonLocked=true,
-            accountNonExpired=true,
-            credentialsNonExpired=true,
-            enabled = true
+            password = "",
+            userRef = this,
+            token = token,
+            authority = authorities.toSet(),
+            accountNonLocked = true,
+            accountNonExpired = true,
+            credentialsNonExpired = true,
+            enabled = true,
         )
     }
 
