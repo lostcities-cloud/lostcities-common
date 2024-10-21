@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.7.+"
+    kotlin("jvm") version "2.0.+"
 }
 
 
@@ -63,18 +63,14 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
 
 tasks.withType<KotlinCompile>() {
 
-    kotlinOptions {
-        jvmTarget = "17"
-        apiVersion = "1.7"
-        languageVersion = "1.7"
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-    }
+    compilerOptions {
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
 
-    // you can also add additional compiler args,
-    // like opting in to experimental features
-    kotlinOptions.freeCompilerArgs += listOf(
-        "-opt-in=kotlin.RequiresOptIn",
-    )
+        freeCompilerArgs.addAll(listOf(
+            "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"
+        ))
+    }
 }
 
 val ktlintFormat by tasks.creating(JavaExec::class) {
@@ -91,10 +87,10 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
+            url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("GH_USER")
+                password = System.getenv("GH_TOKEN")
             }
         }
     }
