@@ -20,23 +20,24 @@ val ktlint by configurations.creating
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.+")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.1.+")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.2.+")
     implementation("org.springframework.data:spring-data-jpa:3.2.+")
-    implementation("org.springframework.data:spring-data-commons:3.1.+")
-    implementation("org.springframework.security:spring-security-config:6.1.5")
+    implementation("org.springframework.data:spring-data-commons:3.2.+")
+    implementation("org.springframework.security:spring-security-config:6.1.+")
     implementation("org.springframework.security:spring-security-web:6.1.+")
+    implementation("org.springframework.security:spring-security-core:6.1.+")
+    compileOnly("org.springframework:spring-web:6.1.+")
 
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
-    implementation("org.springframework.security:spring-security-core:6.1.+")
-    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
-
-    compileOnly("org.springframework:spring-web:5.3.+")
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
-    compileOnly("org.slf4j:slf4j-api:1.7.+")
     compileOnly("jakarta.annotation:jakarta.annotation-api:3.0.0")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+
+
+    compileOnly("org.slf4j:slf4j-api:1.7.+")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
@@ -96,6 +97,7 @@ publishing {
     }
     publications {
         register<MavenPublication>("gpr") {
+            version = project.property("version")!! as String
             from(components["java"])
         }
     }
