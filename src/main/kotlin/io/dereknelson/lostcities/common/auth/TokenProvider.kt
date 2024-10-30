@@ -60,7 +60,6 @@ class TokenProvider() {
             .compact()
     }
 
-
     fun getAuthentication(token: String?): LostCitiesAuthenticationToken {
         Jwts.parserBuilder().setSigningKey(secretKey)
         val claims = Jwts.parser()
