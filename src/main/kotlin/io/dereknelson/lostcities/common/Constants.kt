@@ -9,4 +9,5 @@ object Constants {
     const val SYSTEM_ACCOUNT = "system"
     const val DEFAULT_LANGUAGE = "en_US"
     const val ANONYMOUS_USER = "anonymoususer"
+    val AI_USER_NAMES: List<String> = listOf("santiago_woodward", "colby_bullock", "creed")
 }

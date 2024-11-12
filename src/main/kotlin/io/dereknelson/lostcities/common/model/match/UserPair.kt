@@ -2,12 +2,15 @@ package io.dereknelson.lostcities.common.model.match
 
 import java.util.*
 
+@Deprecated("Please use user pair in models")
 data class UserPair(
     var user1: String,
-    var user2: String? = null,
-
     var score1: Int = 0,
+    var isPlayer1Ai: Boolean = false,
+
+    var user2: String? = null,
     var score2: Int = 0,
+    var isPlayer2Ai: Boolean = false,
 ) {
     val isPopulated: Boolean
         get() = user2 != null
