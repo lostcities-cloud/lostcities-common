@@ -4,7 +4,7 @@ import io.dereknelson.lostcities.common.auth.entity.UserRef
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
-class LostCitiesUserDetails(
+open class LostCitiesUserDetails(
     val id: Long,
     val login: String,
     val email: String,
