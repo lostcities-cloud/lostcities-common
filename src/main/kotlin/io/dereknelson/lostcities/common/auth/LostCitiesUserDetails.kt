@@ -5,10 +5,9 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
 open class LostCitiesUserDetails(
-    val id: Long,
+    private val id: Long,
     val login: String,
     val email: String,
-    val password: String,
     val userRef: UserRef,
     val token: String,
     val authority: Set<GrantedAuthority>,
@@ -20,11 +19,17 @@ open class LostCitiesUserDetails(
 
     private var authenticated: Boolean = false
 
-    override fun getName() = login
+    fun getId(): Long {
+        return id
+    }
+
+    override fun getName(): String {
+        return login
+    }
 
     override fun getAuthorities() = authority
 
-    override fun getCredentials(): Any = password
+    override fun getCredentials(): String = token
 
     override fun getDetails(): Any = this
 

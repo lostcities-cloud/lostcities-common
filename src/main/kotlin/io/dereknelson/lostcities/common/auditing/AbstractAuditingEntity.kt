@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.common.library
+package io.dereknelson.lostcities.common.auditing
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.Column

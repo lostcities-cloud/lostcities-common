@@ -104,12 +104,11 @@ class TokenProvider() {
         return false
     }
 
-    fun UserRef.asUserDetails(token: String, authorities: Collection<GrantedAuthority>): LostCitiesUserDetails {
+    private fun UserRef.asUserDetails(token: String, authorities: Collection<GrantedAuthority>): LostCitiesUserDetails {
         return LostCitiesUserDetails(
             id!!,
             login!!,
             email!!,
-            password = "",
             userRef = this,
             token = token,
             authority = authorities.toSet(),

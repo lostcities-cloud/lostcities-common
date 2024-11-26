@@ -1,6 +1,7 @@
-package io.dereknelson.lostcities.common.library
+package io.dereknelson.lostcities.common.auditing
 
 import io.dereknelson.lostcities.common.AuthoritiesConstants
+import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
@@ -26,6 +27,9 @@ object SecurityUtils {
     private fun extractPrincipal(authentication: Authentication?): String? {
         if (authentication == null) {
             return null
+        } else if (authentication.principal is LostCitiesUserDetails) {
+            val springSecurityUser = authentication.principal as LostCitiesUserDetails
+            return springSecurityUser.login
         } else if (authentication.principal is UserDetails) {
             val springSecurityUser = authentication.principal as UserDetails
             return springSecurityUser.username

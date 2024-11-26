@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.common.library
+package io.dereknelson.lostcities.common.auditing
 
 import io.dereknelson.lostcities.common.Constants
 import org.springframework.data.domain.AuditorAware
