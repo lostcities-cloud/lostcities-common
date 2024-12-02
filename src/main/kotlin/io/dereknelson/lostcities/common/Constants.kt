@@ -1,9 +1,5 @@
 package io.dereknelson.lostcities.common
 
-import jakarta.persistence.AttributeConverter
-import jakarta.persistence.Converter
-import org.springframework.security.core.GrantedAuthority
-
 /**
  * Application constants.
  */
@@ -27,11 +23,6 @@ object Constants {
         "adolescent-tapeworm",
         "adolescent",
         "toad_defense",
-        "karen"
+        "karen",
     )
 }
-
-
-
-
-
