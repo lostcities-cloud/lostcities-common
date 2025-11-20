@@ -11,7 +11,10 @@ class LostCitiesAuthenticationToken(
     private val credentials: String?,
     authorities: MutableCollection<GrantedAuthority>?,
 ) : AbstractAuthenticationToken(authorities) {
-    private val serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID
+
+    companion object {
+        private val serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID
+    }
 
     init {
         super.setAuthenticated(userDetails.isAuthenticated)

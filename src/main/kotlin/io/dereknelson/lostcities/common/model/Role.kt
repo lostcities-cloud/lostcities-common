@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.common.model
 
+import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.Constants
 import jakarta.persistence.Column
 import org.springframework.security.core.GrantedAuthority
@@ -9,8 +10,8 @@ enum class Role(
     private val authority: String,
 ) : GrantedAuthority {
 
-    ROLE_USER(Constants.ROLE_USER),
-    ROLE_ADMIN(Constants.ROLE_ADMIN),
+    ROLE_USER(AuthoritiesConstants.USER),
+    ROLE_ADMIN(AuthoritiesConstants.ADMIN),
     ;
     companion object {
         fun findRoleByName(name: String): Role {

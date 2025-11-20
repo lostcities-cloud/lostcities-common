@@ -1,31 +1,29 @@
 package io.dereknelson.lostcities.common.auth
 
 import io.dereknelson.lostcities.common.auth.entity.UserRef
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jws
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.UnsupportedJwtException
 import org.slf4j.LoggerFactory
-import org.springframework.security.core.Authentication
+import org.springframework.context.annotation.Lazy
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
-import java.security.KeyPairGenerator
-import java.security.PrivateKey
 import java.security.PublicKey
-import java.security.SecureRandom
 import java.security.SignatureException
 import java.util.*
 import java.util.stream.Collectors
 
-@Component
-class TokenProvider() {
-    var publicKey: PublicKey
+@Component @Lazy
+class PublicTokenValidator() {
+    val publicKeyService: PublicKeyService =  PublicKeyService()
+    var publicKey: PublicKey? = null
 
-    private var privateKey: PrivateKey
-    private val keyBytes: Int = 2048
-    private val log = LoggerFactory.getLogger(TokenProvider::class.java)
+    private val log = LoggerFactory.getLogger(PublicTokenValidator::class.java)
     private var tokenValidityInMilliseconds: Long = 60
     private var tokenValidityInMillisecondsForRememberMe: Long = 60 * 60
 
@@ -36,76 +34,62 @@ class TokenProvider() {
     private var tokenValidityInSecondsForRememberMe: String = (60 * 60 * 24 * 7).toString()
 
     init {
-        val randomSeed: ByteArray = SecureRandom.getInstance("SHA1PRNG").generateSeed(keyBytes)
-        val secureRandom = SecureRandom(randomSeed)
-        val keyPair = Jwts.SIG.RS256.keyPair().random(secureRandom).build()
-
-        publicKey = keyPair.public
-        privateKey = keyPair.private
-
         tokenValidityInMilliseconds = 1000 * tokenValidityInSeconds.toLong()
         tokenValidityInMillisecondsForRememberMe =
             1000 * tokenValidityInSecondsForRememberMe.toLong()
     }
 
-
-    fun createToken(authentication: Authentication, userRef: UserRef, rememberMe: Boolean): String {
-        val authorities = authentication.authorities.stream()
-            .map { obj: GrantedAuthority -> obj.authority }
-            .collect(Collectors.joining(","))
-        val now = Date().time
-        val validity: Date
-        validity = if (rememberMe) {
-            Date(now + tokenValidityInMillisecondsForRememberMe)
-        } else {
-            Date(now + tokenValidityInMilliseconds)
+    fun getAuthentication(token: String?): LostCitiesAuthenticationToken? {
+        if(publicKey == null) {
+            publicKey = publicKeyService.getPublicKey()
         }
-        return Jwts.builder()
-            .subject(authentication.name)
-            .claim(AUTHORITIES_KEY, authorities)
-            .claim(USER_ID_KEY, userRef.id)
-            .claim(LOGIN_KEY, userRef.login)
-            .claim(EMAIL_KEY, userRef.email)
-            .signWith(privateKey)
-            .expiration(validity)
 
-            .compact()
-    }
+        try {
 
+            val jwtsParser = Jwts.parser()
+                .verifyWith(publicKey!!)
+                .build()
 
+            val claims = jwtsParser
+                .parseSignedClaims(token).payload
+            val authorities: MutableCollection<GrantedAuthority> = Arrays.stream(
+                claims[AUTHORITIES_KEY].toString().split(",".toRegex()).toTypedArray(),
+            )
+                .map { role: String? -> SimpleGrantedAuthority(role) }
+                .collect(Collectors.toList())
+            val principal = UserRef(claims[USER_ID_KEY].toString().toLong(), claims[LOGIN_KEY].toString(), claims[EMAIL_KEY].toString())
 
-    fun getAuthentication(token: String?): LostCitiesAuthenticationToken {
-        Jwts.parser().verifyWith(publicKey)
+            val details = principal.asUserDetails(token!!, authorities)
 
+            details.isAuthenticated = true
 
-        val claims = Jwts.parser()
-            .verifyWith(publicKey)
-            .build()
-            .parseSignedClaims(token)
-            .payload
-
-        val authorities: MutableCollection<GrantedAuthority> = Arrays.stream(
-            claims[AUTHORITIES_KEY].toString().split(",".toRegex()).toTypedArray(),
-        )
-            .map { role: String? -> SimpleGrantedAuthority(role) }
-            .collect(Collectors.toList())
-        val principal = UserRef(claims[USER_ID_KEY].toString().toLong(), claims[LOGIN_KEY].toString(), claims[EMAIL_KEY].toString())
-
-        val details = principal.asUserDetails(token!!, authorities)
-
-        details.isAuthenticated = true
-
-        return LostCitiesAuthenticationToken(principal, details, token, authorities)
+            return LostCitiesAuthenticationToken(principal, details, token, authorities)
+        } catch (e: JwtException) {
+            return null
+        }
     }
 
     fun validateToken(authToken: String?): Boolean {
+        if(publicKey == null) {
+            publicKey = publicKeyService.getPublicKey()
+        }
+
         try {
-            Jwts.parser()
+            parseToken(authToken!!, publicKey!!)
+            return true
+        } catch (_: Exception) {
+            return false
+        }
+    }
+
+    fun parseToken(token: String, publicKey: PublicKey): Jws<Claims>? {
+        try {
+            return Jwts.parser()
                 .verifyWith(publicKey)
                 .build()
-                .parseSignedClaims(authToken)
+                .parseSignedClaims(token)
 
-            return true
+
         } catch (e: SignatureException) {
             log.info("Invalid JWT signature.")
             log.trace("Invalid JWT signature trace: {}", e)
@@ -122,7 +106,7 @@ class TokenProvider() {
             log.info("JWT token compact of handler are invalid.")
             log.trace("JWT token compact of handler are invalid trace: {}", e)
         }
-        return false
+        return null
     }
 
     private fun UserRef.asUserDetails(token: String, authorities: Collection<GrantedAuthority>): LostCitiesUserDetails {

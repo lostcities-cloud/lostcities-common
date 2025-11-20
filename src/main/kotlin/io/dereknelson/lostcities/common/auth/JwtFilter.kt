@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter
  */
 @Order(-100)
 class JwtFilter(
-    private val tokenProvider: TokenProvider,
+    private val publicKeyValidator: PublicTokenValidator,
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -25,13 +25,13 @@ class JwtFilter(
     ) {
         val jwt = resolveToken(request)
         val requestURI = request.requestURI
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            val authentication = tokenProvider.getAuthentication(jwt)
+        if (StringUtils.hasText(jwt) && publicKeyValidator.validateToken(jwt)) {
+            val authentication = publicKeyValidator.getAuthentication(jwt)
             SecurityContextHolder.clearContext()
             SecurityContextHolder.getContext().setAuthentication(authentication)
             LOG.debug(
                 "set Authentication to security context for '{}', uri: {}",
-                authentication.name,
+                authentication?.name,
                 requestURI,
             )
         } else {
