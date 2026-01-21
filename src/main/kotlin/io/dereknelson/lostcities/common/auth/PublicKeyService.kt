@@ -26,9 +26,9 @@ class PublicKeyService(
         val dto = restClient.get().uri(path).retrieve()
             .body(PublicKeyDto::class.java)!!
 
-        val bobPubKeySpec = X509EncodedKeySpec(dto.getPublicKey())
+        val pubKeySpec = X509EncodedKeySpec(dto.getPublicKey())
         val keyFactory: KeyFactory = KeyFactory.getInstance("RSA")
-        return keyFactory.generatePublic(bobPubKeySpec)
+        return keyFactory.generatePublic(pubKeySpec)
     }
 
     private fun getBaseUrl(): String  {

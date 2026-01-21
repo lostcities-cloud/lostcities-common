@@ -1,7 +1,8 @@
 package io.dereknelson.lostcities.common.auditing
 
-import io.dereknelson.lostcities.common.AuthoritiesConstants
+
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
+import io.dereknelson.lostcities.common.model.Role
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
@@ -62,9 +63,7 @@ object SecurityUtils {
             val authentication = SecurityContextHolder.getContext().authentication
             return authentication != null &&
                 getAuthorities(authentication).noneMatch { anObject: String? ->
-                    AuthoritiesConstants.ANONYMOUS.equals(
-                        anObject,
-                    )
+                    Role.ANONYMOUS.toString() == anObject
                 }
         }
 
