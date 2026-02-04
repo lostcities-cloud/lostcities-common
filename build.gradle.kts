@@ -5,7 +5,7 @@ plugins {
     `java-library`
     `maven-publish`
     id("com.github.rising3.semver") version "0.8.2"
-    kotlin("jvm") version "2.0.+"
+    kotlin("jvm") version "2.3.+"
 }
 
 
@@ -19,7 +19,7 @@ repositories {
 val ktlint by configurations.creating
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.+")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.+")
     implementation("org.springframework.data:spring-data-jpa:3.2.+")
     implementation("org.springframework.data:spring-data-commons:3.2.+")
@@ -68,8 +68,8 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
 tasks.withType<KotlinCompile>() {
 
     compilerOptions {
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3)
 
         freeCompilerArgs.addAll(listOf(
             "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"
