@@ -5,7 +5,8 @@ plugins {
     `java-library`
     `maven-publish`
     id("com.github.rising3.semver") version "0.8.2"
-    kotlin("jvm") version "2.3.+"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 
@@ -20,6 +21,8 @@ val ktlint by configurations.creating
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.10.0")
+
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.+")
     implementation("org.springframework.data:spring-data-jpa:3.2.+")
     implementation("org.springframework.data:spring-data-commons:3.2.+")

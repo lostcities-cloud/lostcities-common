@@ -7,7 +7,7 @@ import org.springframework.security.core.SpringSecurityCoreVersion
 
 class LostCitiesAuthenticationToken(
     private val userRef: UserRef,
-    private val userDetails: LostCitiesUserDetails,
+    val userDetails: LostCitiesUserDetails,
     private val credentials: String?,
     authorities: MutableCollection<GrantedAuthority>?,
 ) : AbstractAuthenticationToken(authorities) {
